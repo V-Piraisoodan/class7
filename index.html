@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <p>Rest Country API</p>
+    </div>
+    <script>
+        var request=new XMLHttpRequest();
+        request.open('GET','https://restcountries.com/v2/all');
+        request.send();
+        request.onload=function() {
+        var data=JSON.parse(this.response);
+
+        // Asia region countries
+        data.filter(rest=> {if(rest.region ==="Asia"){
+            console.log(rest)
+        }} )
+
+        // population less than 2 lakhs
+        data.filter(rest=> {if(rest.population <"200000"){
+            console.log(rest)
+        }} )
+
+        // forEach --> name,capital,flag
+        data.forEach(element => {
+            console.log("Country_name :",element.name,",","Flag :",element.flag,",","Capital :",element.capital,)
+        });
+
+        // total population
+        data.map(rest=> {let a= rest.population ;console.log(a)}).reduce(sum,0)
+        function sum(total,num){
+            console.log(total+ +num)
+        }
+
+        // US dollar countries
+        data.map(rest=> 
+           {if(rest.currencies){
+            for(i=0;i<rest.currencies.length;i++){
+             if(rest.currencies[i].code==="USD"){
+                console.log(rest.name)
+             }
+            }}
+            else{
+                console.log("no curr")
+            }
+            }
+           
+           )
+
+    }
+    </script>
+</body>
+</html>
